@@ -1,73 +1,186 @@
-# Welcome to your Lovable project
+## 📌 서비스명
 
-## Project info
+[Day7]은 “7일 동안 함께 챌린지 미션을 수행하며 루틴을 만드는 감성 챌린지 플랫폼”입니다.  
+함께 인증하고 서로 응원하며, 감정 중심으로 연결되고 성취를 시각적으로 경험하는 것이 핵심입니다.
 
-**URL**: https://lovable.dev/projects/e1a99d8f-4d79-41d4-b429-344a634a69e1
+<br/>
 
-## How can I edit this code?
+## 💡 인덱스 페이지 소개 및 시작 철학
 
-There are several ways of editing your application.
+**왜 7일일까?**
 
-**Use Lovable**
+> _"우리는 반복된 행동이 만든 존재다. 탁월함은 행동이 아니라 습관이다."_  
+> – 아리스토텔레스
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e1a99d8f-4d79-41d4-b429-344a634a69e1) and start prompting.
+Day7은 짧지만 강력한 7일짜리 습관 스프린트를 통해, 작고 의미 있는 변화를 스스로 만들 수 있도록 돕습니다.  
+함께하는 소규모 챌린지, 매일의 인증과 응원, 그리고 뱃지로 이어지는 루틴 완성.
 
-Changes made via Lovable will be committed automatically to this repo.
+👉 **[챌린지 배포 링크 바로가기](https://day7-v3.lovable.app/)**
 
-**Use your preferred IDE**
+<br/>
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## ❤️ 서비스 핵심 가치관 (Core Values)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **작은 성취의 힘** – 매일 아주 작은 행동이 모여 큰 변화를 만든다.
+- **함께 성장하기** – 혼자보다는 함께 할 때 지속된다.
+- **감정의 기록** – 행동뿐 아니라 감정의 변화도 함께 저장된다.
+- **정직한 연결** – 경쟁보다 공감, 피드백보다 응원이 우선이다.
+- **짧고 완전한 루틴** – 7일이라는 짧고 명확한 단위로 완결성 있는 성장 경험 제공
 
-Follow these steps:
+<br/>
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 👤 페르소나: 루틴이 필요한 감성형 MZ세대
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 이름: 안금소 (23세, 대학생)
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **특징**: 감정 표현이 풍부하고 감성적인 콘텐츠를 좋아함
+- **라이프스타일**: 불규칙한 수업과 과제 사이, 루틴 없이 시간 흘려보내는 날이 많음
+- **목표**: 일상 속 소소한 습관을 만들고, 그걸 누군가와 나누고 싶음
+- **니즈**: 작고 꾸준한 미션을 누군가와 공유하며 자존감을 높이고 싶음
+- **페인 포인트**: 혼자서는 꾸준히 못하고, SNS는 피로하지만 연결감은 그립다
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+<br/>
 
-**Edit a file directly in GitHub**
+## 🧩 사용자 시나리오 및 스토리
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### **상황**
 
-**Use GitHub Codespaces**
+유진은 월요일 아침, "감사하는 습관" 챌린지에 참여해 4명의 팀원과 함께 시작한다.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### **사용자 시나리오**
 
-## What technologies are used for this project?
+1. 앱을 켜고 챌린지를 시작한다
+2. 매일 아침 도착하는 미션을 확인하고 간단히 수행한다
+3. 팀원들의 기록에 공감 리액션을 남기며 하루를 마무리한다
+4. 7일이 끝나면, 챌린지 성공 여부에 따라 뱃지를 받는다
+5. 마이페이지에서 자신의 캐릭터에 뱃지가 추가되는 것을 확인하고, 다음 챌린지를 찾는다
 
-This project is built with:
+### **사용자 스토리**
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+“나는 루틴 없는 일상이 자꾸 나를 불안하게 만들어요.  
+그래서 작은 습관이라도, 누군가와 함께 만들어가고 싶어요.  
+Day7은 나와 비슷한 리듬을 가진 사람들과 함께 성장하게 해줘요.”
 
-## How can I deploy this project?
+<br/>
 
-Simply open [Lovable](https://lovable.dev/projects/e1a99d8f-4d79-41d4-b429-344a634a69e1) and click on Share -> Publish.
+## ✅ 인수 조건 (Acceptance Criteria)
 
-## Can I connect a custom domain to my Lovable project?
+- **Given**: 사용자가 Day7 앱에 접속했을 때
+- **When**: 챌린지를 시작하고 일일 미션을 인증할 때
+- **Then**: 팀원 과반수의 태그 체크가 완료되면 해당 인증이 인정된다
 
-Yes, you can!
+<br/>
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 💎 핵심 가치 제안 (Value Proposition)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+| 가치를 주는 요소            | 설명                                                                |
+| --------------------------- | ------------------------------------------------------------------- |
+| **공동 루틴**               | 7일 동안 작지만 일관된 습관 형성을 팀 기반으로 유도                 |
+| **감정 공유 중심**          | 기록된 감정과 생각에 공감 리액션을 주고받는 안전한 커뮤니티         |
+| **루틴 완결성**             | 7일이라는 유한한 기간을 제시하여 도전의 심리적 부담 최소화          |
+| **뱃지를 통한 보상 시스템** | 도전 성공 시 디지털 뱃지를 수집하고 캐릭터에 적용                   |
+| **진입장벽 낮음**           | 하루 한 줄 기록, 한 장 사진, 한 번의 응원으로 충분한 참여 경험 제공 |
+
+<br/>
+
+## 🧩 핵심 기능 (Core Features)
+
+### 1. 메인 기능 구성
+
+- (1) 챌린지 둘러보기
+- (2) 참여 중인 챌린지 확인 (대시보드)
+- (3) 나만의 챌린지 생성
+
+### 2. 챌린지 생성 기능
+
+- 사용자는 직접 챌린지를 생성할 수 있음
+- 설정 항목:
+  - 챌린지 제목 & 목표
+  - 챌린지 설명
+  - 시작일 설정
+  - 참여 인원 설정 (3~7명)
+- 챌린지에는 **뱃지형 보상**과 **벌금형 보상(향후 구현)** 중 선택 가능
+  - 뱃지형: 성공 여부에 따라 프로필에 수집
+  - 벌금형(예정): 일정 금액을 걸고 성공 시 회수 / 실패 시 몰수
+
+### 3. 챌린지 탐색 및 참여
+
+- 누구나 현재 모집 중인 챌린지를 자유롭게 탐색하고 참여 가능
+- 챌린지는 세 가지 라이프사이클을 가짐:
+  - 모집 중 → 진행 중 → 종료
+
+### 4. 인증 방식
+
+- 챌린지 참여자는 매일
+  - **사진** + **짧은 문장**을 작성하여 인증
+- 팀원 중 절반 이상이 리액션 및 태그 체크 시 해당 인증이 인정됨
+
+### 5. 결과 보상 및 마이페이지
+
+- 7일 간의 인증 완료 → **성공 뱃지 부여**
+- 실패 시 → **부정적 뱃지** 부여 (ex. 흐릿한 뱃지, 깨진 뱃지 등)
+- 마이페이지에서는
+  - 3D 애니메이션으로 표현된 **어린이 캐릭터(UP 느낌)**가 존재
+  - 뱃지를 **옷이나 모자에 부착**하며 시각적으로 성장을 표현
+
+<br/>
+
+## 🛠️ 구현 범위 (Prototype Scope)
+
+- 챌린지 생성 / 탐색 / 참여 흐름 UI 구현
+- 뱃지형 보상 구조를 중심으로 한 인증 & 평가 흐름 구성
+- 감정 태그와 체크 기능 포함
+- 마이페이지 캐릭터 + 뱃지 장착 구조는 시각적 목업 우선
+- 벌금형 보상은 추후 개발 예정 (기획상 존재만 명시)
+
+<br/>
+
+## 📍 **페이지 흐름**
+
+1. **인덱스 페이지 (홈 화면)**
+
+- 상단:
+
+  - Day7 로고
+  - 철학 문구: "우리는 반복된 행동이 만든 존재다. 탁월함은 행동이 아니라 습관이다." – 아리스토텔레스
+  - "7일만 하면 습관이 됩니다" 메시지와 [챌린지 시작하기] 버튼
+  - 현재 로그인 유저 `안금소`의 프로필 캐릭터 (3D 어린아이 스타일)와 인삿말
+
+- 메인 기능 영역:
+  - (1) **현재 참여 중인 챌린지 카드**
+    - 챌린지명, 진행일 수 (ex. 3/7일), 인증 여부, 팀원 수, 인증률
+  - (2) **챌린지 둘러보기**
+    - 모집 중인 챌린지 카드 3개 (목데이터 사용)
+    - 항목: 챌린지명, 설명, 시작일, 현재 참여 인원, 남은 모집 시간
+  - (3) **챌린지 생성하기 버튼**
+
+🧩 **챌린지 생성 플로우**
+
+- 사용자가 직접 챌린지를 생성할 수 있음
+- 설정 항목:
+  - 챌린지 제목
+  - 목표 설명
+  - 시작일
+  - 참여 인원 (3~7명 제한)
+  - 보상 방식 선택:
+    - 뱃지형 보상 (기본 구현)
+    - 벌금형 보상 (표시만, 추후 구현 예정)
+
+📌 **챌린지 상태 구조**
+
+- 챌린지는 다음 3단계의 라이프 사이클을 가짐:
+  - 모집 중 → 진행 중 → 종료
+- 각 상태별 카드 디자인 구분
+
+📸 **챌린지 인증 기능**
+
+- 참여자는 매일 사진 + 짧은 문장을 작성하여 인증
+- 팀원 중 절반 이상이 감정 리액션 또는 태그 체크 시 인증 인정됨
+
+🏅 **보상 및 마이페이지**
+
+- 챌린지를 완료하면 `성공 뱃지`를 획득
+- 실패 시 `부정적 뱃지` (흐릿하거나 깨진 형태) 획득
+- 마이페이지:
+  - 내 프로필은 3D 어린아이 캐릭터로 표현됨 (Pixar 'UP' 스타일)
+  - 획득한 뱃지는 옷, 가방 등에 붙여 시각적으로 변화함
