@@ -1,4 +1,3 @@
-
 export interface Challenge {
   id: string;
   title: string;
@@ -73,7 +72,7 @@ export const mockUser: User = {
       imageUrl: '🙏',
     },
   ],
-  currentChallenges: ['challenge3'],
+  currentChallenges: ['challenge3', 'challenge10'],
   completedChallenges: 5,
   greetingMessage:
     '금소님의 작은 습관이 특별한 이야기가 되어가고 있어요! 멋진 도전을 이어가고 있는 당신을 응원합니다!',
@@ -96,7 +95,7 @@ export const additionalUsers: User[] = [
         imageUrl: '✍️',
       },
     ],
-    currentChallenges: ['challenge3', 'challenge4'],
+    currentChallenges: ['challenge3', 'challenge4', 'challenge10'],
     completedChallenges: 3,
     greetingMessage: '작은 변화가 큰 성장으로 이어진다고 믿어요! 함께 해보아요.',
   },
@@ -145,7 +144,7 @@ export const additionalUsers: User[] = [
         imageUrl: '🚶‍♂️',
       },
     ],
-    currentChallenges: ['challenge3', 'challenge5'],
+    currentChallenges: ['challenge3', 'challenge5', 'challenge10'],
     completedChallenges: 2,
     greetingMessage: '건강한 마음, 건강한 몸! 함께 걸어가요.',
   },
@@ -194,7 +193,7 @@ export const additionalUsers: User[] = [
         imageUrl: '👨‍🍳',
       },
     ],
-    currentChallenges: ['challenge3'],
+    currentChallenges: ['challenge3', 'challenge10'],
     completedChallenges: 1,
     greetingMessage: '맛있는 음식으로 하루하루 행복을 만들어가요!',
   },
@@ -286,11 +285,25 @@ export const mockChallenges: Challenge[] = [
     createdBy: 'user6',
     timeLeft: '4일 후 시작',
   },
+  {
+    id: 'challenge10',
+    title: '매일 스트레칭 5분',
+    description: '몸과 마음을 풀어주는 간단한 스트레칭 5분',
+    status: 'in-progress',
+    startDate: '2024-07-02',
+    participants: ['user1', 'user2', 'user4', 'user6'],
+    maxParticipants: 6,
+    currentDay: 2,
+    totalDays: 7,
+    verificationRate: 75,
+    rewardType: 'badge',
+    tags: ['건강', '스트레칭', '운동'],
+    createdBy: 'user2',
+  },
 ];
 
 // 일일 인증 목데이터
 export const mockVerifications: DailyVerification[] = [
-  // user1 (안금소) 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge3',
@@ -475,6 +488,91 @@ export const mockVerifications: DailyVerification[] = [
     message: '',
     verifiedBy: [],
     createdAt: '2024-07-03T00:00:00Z',
+  },
+
+  // 새로운 challenge10 (매일 스트레칭 5분) 인증 기록
+  // 1일차 인증 기록
+  {
+    userId: 'user1',
+    challengeId: 'challenge10',
+    day: 1,
+    status: 'completed',
+    photo: '🧘‍♀️',
+    message: '아침에 일어나서 목과 어깨 스트레칭! 하루 종일 개운해요.',
+    verifiedBy: ['user2', 'user4', 'user6'],
+    createdAt: '2024-07-02T07:00:00Z',
+  },
+  {
+    userId: 'user2',
+    challengeId: 'challenge10',
+    day: 1,
+    status: 'completed',
+    photo: '💪',
+    message: '점심시간에 책상에서 간단한 스트레칭. 몸이 한결 가벼워졌어요!',
+    verifiedBy: ['user1', 'user4', 'user6'],
+    createdAt: '2024-07-02T12:30:00Z',
+  },
+  {
+    userId: 'user4',
+    challengeId: 'challenge10',
+    day: 1,
+    status: 'completed',
+    photo: '🤸‍♂️',
+    message: '운동 후 쿨다운 스트레칭으로 마무리! 근육이 이완되는 느낌이 좋아요.',
+    verifiedBy: ['user1', 'user2', 'user6'],
+    createdAt: '2024-07-02T19:00:00Z',
+  },
+  {
+    userId: 'user6',
+    challengeId: 'challenge10',
+    day: 1,
+    status: 'completed',
+    photo: '🌅',
+    message: '새벽에 일어나서 전신 스트레칭. 몸과 마음이 깨어나는 시간!',
+    verifiedBy: ['user1', 'user2', 'user4'],
+    createdAt: '2024-07-02T06:00:00Z',
+  },
+
+  // 2일차 인증 기록 (오늘 - user1은 아직 인증 안함)
+  {
+    userId: 'user1',
+    challengeId: 'challenge10',
+    day: 2,
+    status: 'pending',
+    photo: '',
+    message: '',
+    verifiedBy: [],
+    createdAt: '2024-07-03T00:00:00Z',
+  },
+  {
+    userId: 'user2',
+    challengeId: 'challenge10',
+    day: 2,
+    status: 'completed',
+    photo: '🏃‍♂️',
+    message: '오늘은 다리 스트레칭에 집중! 허벅지와 종아리를 시원하게 늘려줬어요.',
+    verifiedBy: ['user4', 'user6'], // user1이 아직 확인 안함
+    createdAt: '2024-07-03T08:00:00Z',
+  },
+  {
+    userId: 'user4',
+    challengeId: 'challenge10',
+    day: 2,
+    status: 'completed',
+    photo: '🤲',
+    message: '손목과 팔 스트레칭으로 하루 시작! 컴퓨터 작업 전 필수 루틴이에요.',
+    verifiedBy: ['user2', 'user6'], // user1이 아직 확인 안함
+    createdAt: '2024-07-03T09:30:00Z',
+  },
+  {
+    userId: 'user6',
+    challengeId: 'challenge10',
+    day: 2,
+    status: 'completed',
+    photo: '🧘',
+    message: '요가 매트 위에서 5분간 전신 스트레칭. 몸의 긴장이 풀리는 느낌!',
+    verifiedBy: ['user2', 'user4'], // user1이 아직 확인 안함
+    createdAt: '2024-07-03T18:00:00Z',
   },
 ];
 
