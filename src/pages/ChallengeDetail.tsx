@@ -306,11 +306,19 @@ const ChallengeDetail = () => {
                                 {verification && verification.message && (
                                   <div className="space-y-2">
                                     <div className="bg-muted p-3 rounded-lg">
-                                      <div className="flex items-center gap-2 mb-1">
-                                        <span className="text-2xl">{verification.photo}</span>
-                                        <span className="text-sm text-muted-foreground">
-                                          {new Date(verification.createdAt).toLocaleString()}
-                                        </span>
+                                      <div className="flex items-center gap-2 mb-2">
+                                        {verification.photo && (
+                                          <img 
+                                            src={verification.photo} 
+                                            alt="인증 사진" 
+                                            className="w-16 h-16 rounded-lg object-cover bg-gray-200"
+                                          />
+                                        )}
+                                        <div className="flex-1">
+                                          <span className="text-sm text-muted-foreground">
+                                            {new Date(verification.createdAt).toLocaleString()}
+                                          </span>
+                                        </div>
                                       </div>
                                       <p className="text-sm">{verification.message}</p>
                                     </div>
