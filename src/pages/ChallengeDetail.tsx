@@ -1,12 +1,12 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Users, TrendingUp, CheckCircle, Clock } from "lucide-react";
+import { ArrowLeft, Calendar, Users, TrendingUp, CheckCircle, Clock, Camera } from "lucide-react";
 import { mockChallenges, allUsers, mockVerifications, mockUser } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -16,6 +16,9 @@ const ChallengeDetail = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [verificationMessage, setVerificationMessage] = useState("");
+  const [verificationPhoto, setVerificationPhoto] = useState("https://placehold.co/400x300?text=Click+to+Upload");
+  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
 
   const challenge = mockChallenges.find(c => c.id === challengeId);
   
@@ -80,10 +83,41 @@ const ChallengeDetail = () => {
   };
 
   const handleVerification = () => {
+    if (!verificationMessage.trim()) {
+      toast({
+        title: "메시지를 입력해주세요",
+        description: "인증 메시지를 작성해주세요.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Create new verification record
+    const newVerification = {
+      userId: mockUser.id,
+      challengeId: challengeId!,
+      day: currentDay,
+      status: 'pending' as const,
+      photo: verificationPhoto,
+      message: verificationMessage,
+      verifiedBy: [],
+      createdAt: new Date().toISOString(),
+    };
+
+    // In a real app, this would be sent to the backend
+    mockVerifications.push(newVerification);
+
+    setIsVerificationModalOpen(false);
+    setVerificationMessage("");
+    setVerificationPhoto("https://placehold.co/400x300?text=Click+to+Upload");
+
     toast({
       title: "인증 완료! 🎉",
-      description: "오늘의 미션을 성공적으로 완료했습니다.",
+      description: "팀원들의 인증 확인을 기다리고 있어요.",
     });
+
+    // Force re-render by updating the page
+    window.location.reload();
   };
 
   const handleVerifyOther = (userId: string, day: number) => {
@@ -104,6 +138,17 @@ const ChallengeDetail = () => {
         status: getVerificationStatus(user.id, day)
       };
     });
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setVerificationPhoto(e.target?.result as string || "https://placehold.co/400x300?text=Uploaded+Image");
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -199,9 +244,57 @@ const ChallengeDetail = () => {
                     <h3 className="font-semibold text-primary mb-1">아직 인증하지 않았어요!</h3>
                     <p className="text-sm text-muted-foreground">오늘의 미션을 완료하고 인증해보세요.</p>
                   </div>
-                  <Button onClick={handleVerification} className="ml-4">
-                    인증하기
-                  </Button>
+                  <Dialog open={isVerificationModalOpen} onOpenChange={setIsVerificationModalOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="ml-4">
+                        인증하기
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Camera className="w-5 h-5" />
+                          인증하기
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">인증 사진</label>
+                          <div className="relative">
+                            <img 
+                              src={verificationPhoto} 
+                              alt="인증 사진" 
+                              className="w-full h-48 object-cover rounded-lg border-2 border-dashed border-gray-300 cursor-pointer hover:border-primary transition-colors"
+                              onClick={() => document.getElementById('photo-upload')?.click()}
+                            />
+                            <input
+                              id="photo-upload"
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleImageUpload}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">인증 메시지</label>
+                          <Textarea
+                            placeholder="오늘의 인증 메시지를 작성해주세요..."
+                            value={verificationMessage}
+                            onChange={(e) => setVerificationMessage(e.target.value)}
+                            className="min-h-[80px]"
+                          />
+                        </div>
+                        <Button 
+                          onClick={handleVerification}
+                          className="w-full"
+                          disabled={!verificationMessage.trim()}
+                        >
+                          등록하기
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             ) : myTodayStatus === 'completed' ? (

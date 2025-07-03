@@ -1,4 +1,3 @@
-
 export interface Challenge {
   id: string;
   title: string;
@@ -350,7 +349,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user2', 'user4', 'user6'],
     createdAt: '2024-07-03T14:20:00Z',
   },
-  // user2 인증 기록
   {
     userId: 'user2',
     challengeId: 'challenge3',
@@ -381,7 +379,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: [],
     createdAt: '2024-07-03T00:00:00Z',
   },
-  // user3 인증 기록
   {
     userId: 'user3',
     challengeId: 'challenge3',
@@ -412,7 +409,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user4', 'user6'],
     createdAt: '2024-07-03T15:45:00Z',
   },
-  // user4 인증 기록
   {
     userId: 'user4',
     challengeId: 'challenge3',
@@ -443,7 +439,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3', 'user5'],
     createdAt: '2024-07-03T06:00:00Z',
   },
-  // user5 인증 기록
   {
     userId: 'user5',
     challengeId: 'challenge3',
@@ -474,7 +469,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3', 'user4'],
     createdAt: '2024-07-03T12:15:00Z',
   },
-  // user6 인증 기록
   {
     userId: 'user6',
     challengeId: 'challenge3',
@@ -505,9 +499,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: [],
     createdAt: '2024-07-03T00:00:00Z',
   },
-
-  // 새로운 challenge10 (매일 스트레칭 5분) 인증 기록
-  // 1일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge10',
@@ -548,8 +539,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user2', 'user4'],
     createdAt: '2024-07-02T06:00:00Z',
   },
-
-  // 2일차 인증 기록 (오늘 - user1은 아직 인증 안함)
   {
     userId: 'user1',
     challengeId: 'challenge10',
@@ -567,7 +556,7 @@ export const mockVerifications: DailyVerification[] = [
     status: 'completed',
     photo: 'https://images.unsplash.com/photo-1506629905607-24d3b3e3da82?w=400&h=300&fit=crop',
     message: '오늘은 다리 스트레칭에 집중! 허벅지와 종아리를 시원하게 늘려줬어요.',
-    verifiedBy: ['user4', 'user6'], // user1이 아직 확인 안함
+    verifiedBy: ['user4', 'user6'],
     createdAt: '2024-07-03T08:00:00Z',
   },
   {
@@ -577,7 +566,7 @@ export const mockVerifications: DailyVerification[] = [
     status: 'completed',
     photo: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=400&h=300&fit=crop',
     message: '손목과 팔 스트레칭으로 하루 시작! 컴퓨터 작업 전 필수 루틴이에요.',
-    verifiedBy: ['user2', 'user6'], // user1이 아직 확인 안함
+    verifiedBy: ['user2', 'user6'],
     createdAt: '2024-07-03T09:30:00Z',
   },
   {
@@ -587,12 +576,9 @@ export const mockVerifications: DailyVerification[] = [
     status: 'completed',
     photo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
     message: '요가 매트 위에서 5분간 전신 스트레칭. 몸의 긴장이 풀리는 느낌!',
-    verifiedBy: ['user2', 'user4'], // user1이 아직 확인 안함
+    verifiedBy: ['user2', 'user4'],
     createdAt: '2024-07-03T18:00:00Z',
   },
-
-  // 새로운 challenge11 (아침 스트레칭 루틴) 인증 기록
-  // 1일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge11',
@@ -623,8 +609,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3'],
     createdAt: '2024-06-29T06:45:00Z',
   },
-
-  // 2일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge11',
@@ -655,8 +639,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3'],
     createdAt: '2024-06-30T06:30:00Z',
   },
-
-  // 3일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge11',
@@ -687,8 +669,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3'],
     createdAt: '2024-07-01T06:50:00Z',
   },
-
-  // 4일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge11',
@@ -719,8 +699,6 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3'],
     createdAt: '2024-07-02T06:40:00Z',
   },
-
-  // 5일차 인증 기록
   {
     userId: 'user1',
     challengeId: 'challenge11',
@@ -751,17 +729,15 @@ export const mockVerifications: DailyVerification[] = [
     verifiedBy: ['user1', 'user3'],
     createdAt: '2024-07-03T06:55:00Z',
   },
-
-  // 6일차 인증 기록 (오늘 - user1은 아직 인증 안함)
   {
     userId: 'user1',
     challengeId: 'challenge11',
     day: 6,
     status: 'pending',
-    photo: '',
-    message: '',
+    photo: 'https://placehold.co/400x300?text=Uploaded+Image',
+    message: '오늘도 몸과 마음을 깨우는 스트레칭으로 시작했어요!',
     verifiedBy: [],
-    createdAt: '2024-07-04T00:00:00Z',
+    createdAt: '2024-07-04T08:00:00Z',
   },
   {
     userId: 'user3',
@@ -770,7 +746,7 @@ export const mockVerifications: DailyVerification[] = [
     status: 'completed',
     photo: 'https://images.unsplash.com/photo-1506629905607-24d3b3e3da82?w=400&h=300&fit=crop',
     message: '6일째 아침 스트레칭! 마지막 날이 다가오니 아쉬워요.',
-    verifiedBy: ['user5'], // user1이 아직 확인 안함
+    verifiedBy: ['user5'],
     createdAt: '2024-07-04T07:30:00Z',
   },
   {
@@ -780,7 +756,7 @@ export const mockVerifications: DailyVerification[] = [
     status: 'completed',
     photo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
     message: '거의 마지막 날! 스트레칭이 이제 자연스러운 일상이 되었어요.',
-    verifiedBy: ['user3'], // user1이 아직 확인 안함
+    verifiedBy: ['user3'],
     createdAt: '2024-07-04T06:45:00Z',
   },
 ];
