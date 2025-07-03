@@ -4,15 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Users, TrendingUp, CheckCircle, Clock, X } from "lucide-react";
+import { ArrowLeft, Calendar, Users, TrendingUp, CheckCircle, Clock } from "lucide-react";
 import { mockChallenges, allUsers, mockVerifications, mockUser } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const ChallengeDetail = () => {
   const { challengeId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
   const challenge = mockChallenges.find(c => c.id === challengeId);
   
@@ -24,6 +27,33 @@ const ChallengeDetail = () => {
   const progressPercentage = challenge.currentDay ? (challenge.currentDay / challenge.totalDays) * 100 : 0;
   const currentDay = challenge.currentDay || 1;
   
+  // 나의 인증률 계산
+  const myVerifications = mockVerifications.filter(v => 
+    v.userId === mockUser.id && v.challengeId === challengeId
+  );
+  const myCompletedVerifications = myVerifications.filter(v => {
+    const requiredVerifications = Math.ceil(participants.length / 2);
+    return v.verifiedBy.length >= requiredVerifications && v.status === 'completed';
+  });
+  const myVerificationRate = myVerifications.length > 0 ? Math.round((myCompletedVerifications.length / myVerifications.length) * 100) : 0;
+
+  // 팀 전체 인증률 계산
+  const allVerifications = mockVerifications.filter(v => v.challengeId === challengeId);
+  const totalPossibleVerifications = participants.length * currentDay;
+  const completedVerifications = allVerifications.filter(v => {
+    const requiredVerifications = Math.ceil(participants.length / 2);
+    return v.verifiedBy.length >= requiredVerifications && v.status === 'completed';
+  });
+  const teamVerificationRate = totalPossibleVerifications > 0 ? Math.round((completedVerifications.length / totalPossibleVerifications) * 100) : 0;
+
+  // 오늘 나의 인증 상태 확인
+  const myTodayVerification = mockVerifications.find(v => 
+    v.userId === mockUser.id && v.challengeId === challengeId && v.day === currentDay
+  );
+  const myTodayStatus = myTodayVerification ? 
+    (myTodayVerification.verifiedBy.length >= Math.ceil(participants.length / 2) && myTodayVerification.status === 'completed' ? 'completed' : 'pending') 
+    : 'not_verified';
+
   const getVerificationStatus = (userId: string, day: number) => {
     const verification = mockVerifications.find(v => 
       v.userId === userId && v.challengeId === challengeId && v.day === day
@@ -31,7 +61,6 @@ const ChallengeDetail = () => {
     
     if (!verification) return 'pending';
     
-    // 팀원 중 절반 이상이 인증해야 성공
     const requiredVerifications = Math.ceil(participants.length / 2);
     if (verification.verifiedBy.length >= requiredVerifications && verification.status === 'completed') {
       return 'completed';
@@ -50,15 +79,6 @@ const ChallengeDetail = () => {
     }
   };
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'completed': return '인증 완료';
-      case 'failed': return '인증 실패';
-      case 'pending': return '미인증';
-      default: return '미인증';
-    }
-  };
-
   const handleVerification = () => {
     toast({
       title: "인증 완료! 🎉",
@@ -66,11 +86,24 @@ const ChallengeDetail = () => {
     });
   };
 
-  const canVerifyToday = (userId: string) => {
-    const verification = mockVerifications.find(v => 
-      v.userId === userId && v.challengeId === challengeId && v.day === currentDay
-    );
-    return !verification || verification.status === 'pending';
+  const handleVerifyOther = (userId: string, day: number) => {
+    toast({
+      title: "인증 확인 완료! ✨",
+      description: "팀원의 인증을 확인했습니다.",
+    });
+  };
+
+  const getDayVerifications = (day: number) => {
+    return participants.map(user => {
+      const verification = mockVerifications.find(v => 
+        v.userId === user.id && v.challengeId === challengeId && v.day === day
+      );
+      return {
+        user,
+        verification,
+        status: getVerificationStatus(user.id, day)
+      };
+    });
   };
 
   return (
@@ -119,18 +152,22 @@ const ChallengeDetail = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-primary" />
                 <span>시작일: {challenge.startDate}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-primary" />
-                <span>참여자: {challenge.participants.length}/{challenge.maxParticipants}명</span>
+                <span>참여자: {challenge.participants.length}명</span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                <span>팀 인증률: {challenge.verificationRate}%</span>
+                <span>나의 인증률: {myVerificationRate}%</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                <span>팀 인증률: {teamVerificationRate}%</span>
               </div>
             </div>
             
@@ -146,7 +183,52 @@ const ChallengeDetail = () => {
           </CardContent>
         </Card>
 
-        {/* 7일 인증 현황 */}
+        {/* 오늘의 인증 상태 */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-primary" />
+              오늘의 인증 ({currentDay}일차)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {myTodayStatus === 'not_verified' ? (
+              <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-primary mb-1">아직 인증하지 않았어요!</h3>
+                    <p className="text-sm text-muted-foreground">오늘의 미션을 완료하고 인증해보세요.</p>
+                  </div>
+                  <Button onClick={handleVerification} className="ml-4">
+                    인증하기
+                  </Button>
+                </div>
+              </div>
+            ) : myTodayStatus === 'completed' ? (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">✅</span>
+                  <div>
+                    <h3 className="font-semibold text-green-800">오늘 인증 완료!</h3>
+                    <p className="text-sm text-green-600">팀원들이 인증을 확인해주었어요.</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">⏳</span>
+                  <div>
+                    <h3 className="font-semibold text-yellow-800">인증 확인 대기 중</h3>
+                    <p className="text-sm text-yellow-600">팀원들의 인증 확인을 기다리고 있어요.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* 7일 인증 현황 (클릭 가능한 카드들) */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -155,86 +237,112 @@ const ChallengeDetail = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
-              {[1, 2, 3, 4, 5, 6, 7].map((day) => (
-                <div key={day} className="border rounded-lg p-4 bg-muted/20">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-lg flex items-center gap-2">
-                      <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        day <= currentDay ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                      }`}>
-                        {day}
-                      </span>
-                      {day}일차
-                      {day === currentDay && (
-                        <Badge variant="secondary" className="ml-2">오늘</Badge>
-                      )}
-                    </h3>
-                    {day <= currentDay && (
-                      <div className="text-sm text-muted-foreground">
-                        {new Date(new Date(challenge.startDate).getTime() + (day - 1) * 24 * 60 * 60 * 1000).toLocaleDateString()}
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {participants.map((user) => {
-                      const status = getVerificationStatus(user.id, day);
-                      const verification = mockVerifications.find(v => 
-                        v.userId === user.id && v.challengeId === challengeId && v.day === day
-                      );
-                      
-                      return (
-                        <div key={`${day}-${user.id}`} className="flex items-start space-x-3 p-3 rounded-lg border bg-background">
-                          <Avatar className="w-10 h-10">
-                            <AvatarFallback className="text-lg">
-                              {user.avatar}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-medium text-sm">{user.name}</span>
-                              <span className="text-lg">{getStatusIcon(status)}</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground mb-2">
-                              {getStatusText(status)}
-                            </p>
-                            {verification && verification.message && (
-                              <div className="space-y-1">
-                                <p className="text-xs bg-muted p-2 rounded">
-                                  {verification.photo} {verification.message}
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                  인증자: {verification.verifiedBy.length}명
-                                </p>
-                              </div>
-                            )}
-                            {day === currentDay && user.id === mockUser.id && canVerifyToday(user.id) && (
-                              <Button 
-                                size="sm" 
-                                className="w-full mt-2"
-                                onClick={handleVerification}
-                              >
-                                인증하기
-                              </Button>
-                            )}
-                            {day === currentDay && user.id === mockUser.id && !canVerifyToday(user.id) && (
-                              <Button 
-                                size="sm" 
-                                variant="secondary"
-                                className="w-full mt-2"
-                                disabled
-                              >
-                                인증 완료
-                              </Button>
-                            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7].map((day) => {
+                const dayVerifications = getDayVerifications(day);
+                const completedCount = dayVerifications.filter(dv => dv.status === 'completed').length;
+                const failedCount = dayVerifications.filter(dv => dv.status === 'failed').length;
+                const pendingCount = dayVerifications.filter(dv => dv.status === 'pending').length;
+                
+                return (
+                  <Dialog key={day}>
+                    <DialogTrigger asChild>
+                      <Card className={`cursor-pointer hover:shadow-md transition-shadow ${
+                        day <= currentDay ? 'bg-background' : 'bg-muted/50'
+                      } ${day === currentDay ? 'ring-2 ring-primary' : ''}`}>
+                        <CardContent className="p-4 text-center">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mx-auto mb-2 ${
+                            day <= currentDay ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                          }`}>
+                            {day}
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+                          <p className="text-sm font-medium mb-2">
+                            {day}일차
+                            {day === currentDay && (
+                              <Badge variant="secondary" className="ml-1 text-xs">오늘</Badge>
+                            )}
+                          </p>
+                          {day <= currentDay && (
+                            <div className="space-y-1 text-xs">
+                              <div className="flex items-center justify-center gap-1">
+                                <span>✅ {completedCount}</span>
+                                <span>⏳ {pendingCount}</span>
+                                <span>❌ {failedCount}</span>
+                              </div>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <span className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
+                            {day}
+                          </span>
+                          {day}일차 인증 현황
+                          {day === currentDay && (
+                            <Badge variant="secondary">오늘</Badge>
+                          )}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        {dayVerifications.map(({ user, verification, status }) => (
+                          <div key={user.id} className="border rounded-lg p-4 bg-background">
+                            <div className="flex items-start space-x-3">
+                              <Avatar className="w-12 h-12">
+                                <AvatarFallback className="text-lg">
+                                  {user.avatar}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="font-medium">{user.name}</span>
+                                  <span className="text-xl">{getStatusIcon(status)}</span>
+                                  {user.id === mockUser.id && (
+                                    <Badge variant="outline" className="text-xs">나</Badge>
+                                  )}
+                                </div>
+                                {verification && verification.message && (
+                                  <div className="space-y-2">
+                                    <div className="bg-muted p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <span className="text-2xl">{verification.photo}</span>
+                                        <span className="text-sm text-muted-foreground">
+                                          {new Date(verification.createdAt).toLocaleString()}
+                                        </span>
+                                      </div>
+                                      <p className="text-sm">{verification.message}</p>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-xs text-muted-foreground">
+                                        인증 확인: {verification.verifiedBy.length}명 / {Math.ceil(participants.length / 2)}명 필요
+                                      </p>
+                                      {user.id !== mockUser.id && day <= currentDay && verification.message && (
+                                        <Button 
+                                          size="sm" 
+                                          variant="outline"
+                                          onClick={() => handleVerifyOther(user.id, day)}
+                                          disabled={verification.verifiedBy.includes(mockUser.id)}
+                                        >
+                                          {verification.verifiedBy.includes(mockUser.id) ? '확인 완료' : '인증 확인'}
+                                        </Button>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                                {!verification?.message && day <= currentDay && (
+                                  <p className="text-sm text-muted-foreground">아직 인증하지 않았습니다.</p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
