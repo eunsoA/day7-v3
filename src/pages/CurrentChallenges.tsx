@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChallengeCard } from "@/components/ChallengeCard";
@@ -13,11 +12,8 @@ const CurrentChallenges = () => {
 
   const currentChallenges = mockChallenges.filter(c => c.status === 'in-progress' && mockUser.currentChallenges.includes(c.id));
 
-  const handleViewChallenge = () => {
-    toast({
-      title: "인증 기능",
-      description: "인증 기능은 추후 구현 예정입니다.",
-    });
+  const handleViewChallenge = (challengeId: string) => {
+    navigate(`/current-challenges/${challengeId}`);
   };
 
   return (
@@ -57,7 +53,7 @@ const CurrentChallenges = () => {
                   key={challenge.id}
                   challenge={challenge}
                   variant="current"
-                  onView={handleViewChallenge}
+                  onView={() => handleViewChallenge(challenge.id)}
                 />
               ))}
             </div>

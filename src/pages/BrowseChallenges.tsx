@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ChallengeCard } from "@/components/ChallengeCard";
 import { mockChallenges } from "@/data/mockData";
@@ -19,11 +18,8 @@ const BrowseChallenges = () => {
     });
   };
 
-  const handleViewChallenge = () => {
-    toast({
-      title: "챌린지 상세",
-      description: "상세 정보 기능은 추후 구현 예정입니다.",
-    });
+  const handleViewChallenge = (challengeId: string) => {
+    navigate(`/browse-challenges/${challengeId}`);
   };
 
   return (
@@ -63,7 +59,7 @@ const BrowseChallenges = () => {
                 challenge={challenge}
                 variant="recruiting"
                 onJoin={() => handleJoinChallenge(challenge.id)}
-                onView={handleViewChallenge}
+                onView={() => handleViewChallenge(challenge.id)}
               />
             ))}
           </div>

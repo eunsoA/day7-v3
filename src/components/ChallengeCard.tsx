@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -79,7 +80,7 @@ export const ChallengeCard = ({ challenge, variant = 'recruiting', onJoin, onVie
           </div>
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4" />
-            <span>{challenge.participants}/{challenge.maxParticipants}명</span>
+            <span>{challenge.participants.length}/{challenge.maxParticipants}명</span>
           </div>
           {challenge.timeLeft && (
             <div className="flex items-center gap-1">
@@ -124,7 +125,7 @@ export const ChallengeCard = ({ challenge, variant = 'recruiting', onJoin, onVie
               className="flex-1"
               onClick={onView}
             >
-              인증하기
+              상세보기
             </Button>
           )}
           {variant === 'completed' && (
