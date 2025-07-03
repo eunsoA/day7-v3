@@ -25,7 +25,6 @@ const App = () => (
           <Route path="/browse-challenges" element={<BrowseChallenges />} />
           <Route path="/create-challenge" element={<CreateChallenge />} />
           <Route path="/my-page" element={<MyPage />} />
-          <Route path="/challenge/:challengeId" element={<ChallengeDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
