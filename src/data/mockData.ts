@@ -49,7 +49,7 @@ export const mockUser: User = {
       type: 'success',
       earnedDate: '2024-06-15',
       challengeId: 'challenge1',
-      imageUrl: '📚'
+      imageUrl: '📚',
     },
     {
       id: 'badge2',
@@ -58,12 +58,13 @@ export const mockUser: User = {
       type: 'success',
       earnedDate: '2024-06-20',
       challengeId: 'challenge2',
-      imageUrl: '🙏'
-    }
+      imageUrl: '🙏',
+    },
   ],
   currentChallenges: ['challenge3'],
   completedChallenges: 5,
-  greetingMessage: '오늘도 작은 변화를 만들어가는 금소입니다! ✨'
+  greetingMessage:
+    '금소님의 작은 습관이 특별한 이야기가 되어가고 있어요! 멋진 도전을 이어가고 있는 당신을 응원합니다!',
 };
 
 export const mockChallenges: Challenge[] = [
@@ -78,7 +79,7 @@ export const mockChallenges: Challenge[] = [
     totalDays: 7,
     rewardType: 'badge',
     tags: ['독서', '자기계발', '습관'],
-    createdBy: 'user2'
+    createdBy: 'user2',
   },
   {
     id: 'challenge2',
@@ -91,7 +92,7 @@ export const mockChallenges: Challenge[] = [
     totalDays: 7,
     rewardType: 'badge',
     tags: ['감사', '인간관계', '소통'],
-    createdBy: 'user3'
+    createdBy: 'user3',
   },
   {
     id: 'challenge3',
@@ -106,7 +107,7 @@ export const mockChallenges: Challenge[] = [
     verificationRate: 85,
     rewardType: 'badge',
     tags: ['건강', '운동', '야외활동'],
-    createdBy: 'user1'
+    createdBy: 'user1',
   },
   {
     id: 'challenge4',
@@ -120,7 +121,7 @@ export const mockChallenges: Challenge[] = [
     rewardType: 'badge',
     tags: ['일기', '성찰', '글쓰기'],
     createdBy: 'user4',
-    timeLeft: '2일 후 시작'
+    timeLeft: '2일 후 시작',
   },
   {
     id: 'challenge5',
@@ -134,7 +135,7 @@ export const mockChallenges: Challenge[] = [
     rewardType: 'badge',
     tags: ['건강', '수분', '습관'],
     createdBy: 'user5',
-    timeLeft: '3일 후 시작'
+    timeLeft: '3일 후 시작',
   },
   {
     id: 'challenge6',
@@ -148,11 +149,11 @@ export const mockChallenges: Challenge[] = [
     rewardType: 'badge',
     tags: ['디지털디톡스', '명상', '휴식'],
     createdBy: 'user6',
-    timeLeft: '4일 후 시작'
-  }
+    timeLeft: '4일 후 시작',
+  },
 ];
 
 export const philosophyQuote = {
-  text: "우리는 반복된 행동이 만든 존재다. 탁월함은 행동이 아니라 습관이다.",
-  author: "아리스토텔레스"
+  text: '우리는 반복된 행동이 만든 존재다. 탁월함은 행동이 아니라 습관이다.',
+  author: '아리스토텔레스',
 };
