@@ -1,14 +1,15 @@
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ProfileCharacter } from "@/components/ProfileCharacter";
-import { mockUser, philosophyQuote } from "@/data/mockData";
-import { Plus, Sparkles, Users, TrendingUp, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ProfileCharacter } from '@/components/ProfileCharacter';
+import { mockUser, philosophyQuote } from '@/data/mockData';
+import { Plus, Sparkles, Users, TrendingUp, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const navigate = useNavigate();
-
+  const handleStartChallenge = () => {
+    navigate('/create-challenge');
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5">
       {/* 헤더 */}
@@ -19,9 +20,9 @@ const Index = () => {
               <h1 className="text-2xl font-bold text-primary">Day7</h1>
               <Sparkles className="w-6 h-6 text-accent" />
             </div>
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate("/my-page")}
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/my-page')}
               className="text-primary hover:bg-primary/10"
             >
               마이페이지
@@ -30,6 +31,7 @@ const Index = () => {
         </div>
       </div>
 
+      <br />
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-12">
         {/* 히어로 섹션 */}
         <div className="text-center space-y-6">
@@ -39,13 +41,16 @@ const Index = () => {
             </blockquote>
             <cite className="text-muted-foreground">— {philosophyQuote.author}</cite>
           </div>
-          
+
           <div className="space-y-4">
             <h2 className="text-2xl md:text-3xl font-bold text-primary">
               7일만 하면 습관이 됩니다
             </h2>
           </div>
         </div>
+
+        <br />
+        <br />
 
         {/* 사용자 프로필 */}
         <div className="flex justify-center">
@@ -54,19 +59,20 @@ const Index = () => {
           </div>
         </div>
 
+        <br />
+        <br />
+
         {/* 메인 네비게이션 카드들 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* 현재 참여 중인 챌린지 */}
-          <Card 
+          <Card
             className="cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/50 bg-gradient-to-br from-primary/5 to-primary/10"
-            onClick={() => navigate("/current-challenges")}
+            onClick={() => navigate('/current-challenges')}
           >
             <CardHeader className="text-center">
               <TrendingUp className="w-12 h-12 mx-auto mb-4 text-primary" />
               <CardTitle className="text-primary">현재 참여 중인 챌린지</CardTitle>
-              <CardDescription>
-                진행 중인 챌린지를 확인하고 인증해보세요
-              </CardDescription>
+              <CardDescription>진행 중인 챌린지를 확인하고 인증해보세요</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -77,16 +83,14 @@ const Index = () => {
           </Card>
 
           {/* 챌린지 둘러보기 */}
-          <Card 
+          <Card
             className="cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/50 bg-gradient-to-br from-accent/5 to-accent/10"
-            onClick={() => navigate("/browse-challenges")}
+            onClick={() => navigate('/browse-challenges')}
           >
             <CardHeader className="text-center">
               <Users className="w-12 h-12 mx-auto mb-4 text-primary" />
               <CardTitle className="text-primary">챌린지 둘러보기</CardTitle>
-              <CardDescription>
-                새로운 챌린지를 찾아 참여해보세요
-              </CardDescription>
+              <CardDescription>새로운 챌린지를 찾아 참여해보세요</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -97,16 +101,14 @@ const Index = () => {
           </Card>
 
           {/* 챌린지 만들기 */}
-          <Card 
+          <Card
             className="cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/50 bg-gradient-to-br from-secondary/5 to-secondary/10"
-            onClick={() => navigate("/create-challenge")}
+            onClick={() => navigate('/create-challenge')}
           >
             <CardHeader className="text-center">
               <Plus className="w-12 h-12 mx-auto mb-4 text-primary" />
               <CardTitle className="text-primary">나만의 챌린지 만들기</CardTitle>
-              <CardDescription>
-                직접 챌린지를 만들어 팀원들과 함께해보세요
-              </CardDescription>
+              <CardDescription>직접 챌린지를 만들어 팀원들과 함께해보세요</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -117,17 +119,33 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* 챌린지 시작하기 버튼 */}
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            onClick={() => navigate("/create-challenge")}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            챌린지 시작하기
-          </Button>
-        </div>
+        <br />
+        <br />
+
+        {/* 챌린지 생성 섹션 */}
+        <section className="text-center space-y-6">
+          <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="text-primary flex items-center justify-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                나만의 챌린지 만들기
+              </CardTitle>
+              <CardDescription>
+                직접 챌린지를 만들어 다른 사람들과 함께 목표를 달성해보세요
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                size="lg"
+                onClick={handleStartChallenge}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                챌린지 시작하기
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </div>
   );
